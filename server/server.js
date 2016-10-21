@@ -1,8 +1,22 @@
 var http            = require('http'),
 	path            = require('path'),
     //https           = require('https'),
-    express         = require('express');
+    express         = require('express'),
     //morgan          = require('morgan');
+	MongoClient     = require('mongodb').MongoClient, 
+	assert          = require('assert');
+
+// Connection URL
+var url = 'mongodb://localhost:27017/myproject';
+
+// Use connect method to connect to the server
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  console.log("Connected successfully to server");
+
+  db.close();
+});
+
 
 var app = module.exports = express();
 var server = http.Server(app);

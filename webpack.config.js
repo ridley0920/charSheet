@@ -29,6 +29,18 @@ module.exports = {
         },
       },
       {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug'
+      },
+      {
+        test: /\.jade$/,
+        loader: 'jade'
+      },
+      {
         exclude: /node_modules/
       }
     ]
