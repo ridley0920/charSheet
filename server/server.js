@@ -1,42 +1,32 @@
-var cors            = require('cors'),
-    http            = require('http'),
-    express         = require('express'),
-    errorhandler    = require('errorhandler'),
-    dotenv          = require('dotenv'),
-    bodyParser      = require('body-parser');
+var http            = require('http'),
+	path            = require('path'),
+    //https           = require('https'),
+    express         = require('express');
+    //morgan          = require('morgan');
 
-var app = express();
+var app = module.exports = express();
+var server = http.Server(app);
+var io = require('socket.io')(server);
+var fs = require('fs');
 
-dotenv.load();
+server.listen(80);
 
-// Parsers
-// old version of line
-// app.use(bodyParser.urlencoded());
-// new version of line
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cors());
-
-app.use(function(err, req, res, next) {
-  if (err.name === 'StatusError') {
-    res.send(err.status, err.message);
-  } else {
-    next(err);
-  }
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/index.html');
 });
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(logger('dev'));
-  app.use(errorhandler())
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
+
+app.use('/h1', require('../server/routes/chars.js'));
+app.use('/', require('../server/routes/defaults'));
+
+if(!module.parent)
+{
+  server.listen(3001);
+  console.log('Dev Server started on port 3001');
 }
-
-app.use(require('./anonymous-routes'));
-app.use(require('./protected-routes'));
-app.use(require('./user-routes'));
-
-var port = process.env.PORT || 3001;
-
-http.createServer(app).listen(port, function (err) {
-  console.log('listening in http://localhost:' + port);
-});
-

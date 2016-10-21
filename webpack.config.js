@@ -3,7 +3,7 @@ var path = require('path');
 var fs = require('fs');
 
 var nodeModules = {};
-fs.fs.readdirSync('node_modules')
+fs.readdirSync('node_modules')
   .filter(function(x) {
     return ['.bin'].indexOf(x) === -1;
   })
@@ -11,7 +11,7 @@ fs.fs.readdirSync('node_modules')
     nodeModules[mod]='commonjs '+mod;
   });
 
-module.exports = {}
+module.exports = {
   module: {
     // Special compilation rules
     loaders: [
@@ -28,7 +28,9 @@ module.exports = {}
           presets: ['es2015'],
         },
       },
-      exclude: /node_modules/
+      {
+        exclude: /node_modules/
+      }
     ]
   },
   entry: './front/src/index.js',
@@ -39,7 +41,7 @@ module.exports = {}
   },
   devServer:{
     port: 3001
-  }
+  },
   resolve: {
     extensions: ['', '.js', '.vue'],
     packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
