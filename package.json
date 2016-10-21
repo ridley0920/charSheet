@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Modular Character Sheet for Pathfinder",
   "dependencies": {
-    "mongodb": "^2.2.11"
+    "mongodb": "^2.2.11",
+    "socket.io": "^1.5.0"
   },
   "devDependencies": {
     "babel-core": "^6.1.2",

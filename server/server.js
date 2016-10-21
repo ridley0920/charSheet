@@ -1,10 +1,12 @@
-var http            = require('http'),
-	path            = require('path'),
-    //https           = require('https'),
-    express         = require('express'),
-    //morgan          = require('morgan');
-	MongoClient     = require('mongodb').MongoClient, 
-	assert          = require('assert');
+var 
+  http            = require('http'),
+  https           = require('https'),
+  path            = require('path'),
+  socket          = require('socket.io'),
+  express         = require('express'),
+  morgan          = require('morgan'),
+  MongoClient     = require('mongodb').MongoClient, 
+  assert          = require('assert');
 
 // Connection URL
 var url = 'mongodb://localhost:27017/myproject';
